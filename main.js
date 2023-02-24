@@ -84,12 +84,12 @@ function build_interactive_plots() {
     // Scale X
     const X2_SCALE = d3.scaleLinear() 
                        .domain([0, (MAX_X2 + 1)]) // add some padding  
-                       .range([0, (MAX_Y2 * 50)]); 
+                       .range([0, SCATTER_VIS_WIDTH]); 
 
     // Scale Y
     const Y2_SCALE = d3.scaleLinear()
                       .domain([0, (MAX_Y2 + 1)])
-                      .range([(MAX_Y2 * 50), 0]);
+                      .range([SCATTER_VIS_HEIGHT, 0]);
 
     // Plot points on scatter plot
     FRAME2.selectAll("points")  
