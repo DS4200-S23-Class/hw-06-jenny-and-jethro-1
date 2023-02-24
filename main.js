@@ -165,7 +165,7 @@ function build_interactive_plots() {
           .enter()
           .append("rect")
           .attr("x", function(d) { return BAR_X_SCALE(d.Species); })
-          .attr("y", 50)
+          .attr("y", BAR_Y_SCALE(50))
           .attr("width", BAR_X_SCALE.bandwidth())
           .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
           .attr("class", (d) => { return d.Species; });
