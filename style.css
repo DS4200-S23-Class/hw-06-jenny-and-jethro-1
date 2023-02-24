@@ -51,27 +51,3 @@ body {
 	fill: hotpink;
 	opacity: 50%;
 }
-
-/* Styles added border */
-.border {
-	stroke: crimson;
-	stroke-width: 5px;
-}
-
-/* Sets bar color */
-.bar {
-	fill: forestgreen;
-}
-
-/* Changes bar style when hovered over */
-.bar:hover {
-	fill: aqua;
-}
-
-/* Sets style of tooltip */
-.tooltip {
-	position: absolute;
-	background-color: mediumpurple;
-	border: solid;
-	padding: 5px;
-}
