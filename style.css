@@ -1,0 +1,77 @@
+/* Setting font style to Arial */
+body {
+	font-family: Arial;	
+}
+
+/* Centers all elements with the class "centered" */
+.centered {
+	text-align: center;
+}
+
+/* Creates a flex container to make 3 columns */
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+/* Adjusts the left column */
+.flex-left {
+	width: 33%;
+	flex-wrap: flex;
+	flex-direction: column;
+}
+
+/* Adjusts the middle column */
+.flex-middle {
+	flex-direction: column;
+	width: 33%;
+	flex-wrap: wrap;
+}
+
+/* Adjusts the right column */
+.flex-right {
+	flex-direction: column;
+	width: 33%;
+	flex-wrap: wrap;
+}
+
+/* Adjusts the style of the points representing setosa irises */
+.setosa {
+	fill: indigo;
+	opacity: 50%;
+}
+
+.versicolor {
+	fill: coral;
+	opacity: 50%;
+}
+
+.virginica {
+	fill: hotpink;
+	opacity: 50%;
+}
+
+/* Styles added border */
+.border {
+	stroke: crimson;
+	stroke-width: 5px;
+}
+
+/* Sets bar color */
+.bar {
+	fill: forestgreen;
+}
+
+/* Changes bar style when hovered over */
+.bar:hover {
+	fill: aqua;
+}
+
+/* Sets style of tooltip */
+.tooltip {
+	position: absolute;
+	background-color: mediumpurple;
+	border: solid;
+	padding: 5px;
+}
