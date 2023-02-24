@@ -1,6 +1,6 @@
 // Set frame dimensions
-const SCATTER_FRAME_HEIGHT = 550;
-const SCATTER_FRAME_WIDTH = 700; 
+const SCATTER_FRAME_HEIGHT = 500;
+const SCATTER_FRAME_WIDTH = 500; 
 
 // Create three frames for each point
 const FRAME1 = d3.select("#vis1")
@@ -16,7 +16,7 @@ const FRAME2 = d3.select("#vis2")
                  .attr("class", "frame"); 
 
 // Set scatter plot margins
-const SCATTER_PLOT_MARGINS = {left: 50, right: 50, top: 50, bottom: 100};
+const SCATTER_PLOT_MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
 // Set vis dimensions
 const SCATTER_VIS_HEIGHT = SCATTER_FRAME_HEIGHT - SCATTER_PLOT_MARGINS.top - SCATTER_PLOT_MARGINS.bottom;
@@ -32,28 +32,28 @@ function build_interactive_plots() {
   d3.csv("data/iris.csv").then((data) => {
 
     // Find max X value
-    const MAX_X1 = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
+    const MAX_X1 = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
  
     // Find max Y value
-    const MAX_Y1 = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
+    const MAX_Y1 = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
 
     // Scale X
     const X1_SCALE = d3.scaleLinear() 
                        .domain([0, (MAX_X1 + 1)]) // add some padding  
-                       .range([0, (MAX_Y1 * 50)]); 
+                       .range([0, SCATTER_VIS_WIDTH]); 
 
     // Scale Y
     const Y1_SCALE = d3.scaleLinear()
                       .domain([0, (MAX_Y1 + 1)])
-                      .range([(MAX_Y1 * 50), 0]);
+                      .range([SCATTER_VIS_HEIGHT, 0]);
 
     // Plot points on scatter plot
     FRAME1.selectAll("points")  
           .data(data)  
           .enter()       
           .append("circle")  
-            .attr("cx", (d) => { return (X1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.left); }) 
-            .attr("cy", (d) => { return (Y1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.top); }) 
+            .attr("cx", (d) => { return (X1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.left); }) 
+            .attr("cy", (d) => { return (Y1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.top); }) 
             .attr("r", 5)
             .attr("class", (d) => { return d.Species; });
 
@@ -76,10 +76,10 @@ function build_interactive_plots() {
   d3.csv("data/iris.csv").then((data) => {
 
     // Find max X value
-    const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Petal_Width); });
+    const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
    
     // Find max Y value
-    const MAX_Y2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
+    const MAX_Y2 = d3.max(data, (d) => { return parseInt(d.Petal_Width); });
 
     // Scale X
     const X2_SCALE = d3.scaleLinear() 
@@ -96,8 +96,8 @@ function build_interactive_plots() {
           .data(data)  
           .enter()       
           .append("circle")  
-            .attr("cx", (d) => { return (X2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.left); }) 
-            .attr("cy", (d) => { return (Y2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.top); }) 
+            .attr("cx", (d) => { return (X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left); }) 
+            .attr("cy", (d) => { return (Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top); }) 
             .attr("r", 5)
             .attr("class", (d) => { return d.Species; });
 
