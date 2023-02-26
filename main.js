@@ -2,7 +2,7 @@
 const SCATTER_FRAME_HEIGHT = 500;
 const SCATTER_FRAME_WIDTH = 500; 
 
-// Create three frames for each point
+// Create three frames for each visualization
 const FRAME1 = d3.select("#vis1")
                  .append("svg")
                  .attr("height", SCATTER_FRAME_HEIGHT)
@@ -115,7 +115,7 @@ function build_interactive_plots() {
 
   }); 
 
-  // Bar chart
+  // Bar chart - Iris Species Count
 
   // Set bar graph margins
   const BAR_CHART_MARGINS = {top: 30, right: 30, bottom:30, left: 60};
@@ -170,7 +170,14 @@ function build_interactive_plots() {
           .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
           .attr("class", (d) => { return d.Species; });
   });
+
+
+  brush = d3.brush()
+            .extent([[0, 0], [SCATTER_FRAME_WIDTH, SCATTER_FRAME_HEIGHT]] )
+            .on("start", brushStart)
+            .on("brush", brushing)
 }
+
 
 // Call function to display the plots
 build_interactive_plots();
