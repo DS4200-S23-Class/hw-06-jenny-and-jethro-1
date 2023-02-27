@@ -92,7 +92,8 @@ function build_interactive_plots() {
                       .range([SCATTER_VIS_HEIGHT, 0]);
 
     // Plot points on scatter plot
-    FRAME2.selectAll("points")  
+    let myPoint= FRAME2.append("g")
+          .selectAll("points")
           .data(data)  
           .enter()       
           .append("circle")  
@@ -112,6 +113,35 @@ function build_interactive_plots() {
           .attr("transform", "translate(" + SCATTER_PLOT_MARGINS.left + "," + SCATTER_PLOT_MARGINS.bottom + ")")
           .call(d3.axisLeft(Y2_SCALE).ticks(14))
           .attr("font-size", "10px");
+
+    // Add brushing
+    FRAME2
+    .call( d3.brush()                 // Add the brush feature using the d3.brush function
+      .extent( [ [0,0], [SCATTER_FRAME_WIDTH, SCATTER_FRAME_HEIGHT] ] ) // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+      .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
+    )
+
+    // Function that is triggered when brushing is performed
+    function updateChart({selection}) {
+    if (selection === null) {
+      myPoint.attr("stroke", null);
+    } else {
+       myPoint.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top) } );
+       console.log('hello', myPoint._groups)
+       if (Object.values(myPoint._groups).includes('circle.setosa')) {
+        console.log('heyyy')
+  }
+    }
+  }
+
+    // A function that return TRUE or FALSE according if a dot is in the selection or not
+    function isBrushed(brush_coords, cx, cy) {
+         let x0 = brush_coords[0][0],
+             x1 = brush_coords[1][0],
+             y0 = brush_coords[0][1],
+             y1 = brush_coords[1][1];
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+  }
 
   }); 
 
@@ -170,12 +200,6 @@ function build_interactive_plots() {
           .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
           .attr("class", (d) => { return d.Species; });
   });
-
-
-  brush = d3.brush()
-            .extent([[0, 0], [SCATTER_FRAME_WIDTH, SCATTER_FRAME_HEIGHT]] )
-            .on("start", brushStart)
-            .on("brush", brushing)
 }
 
 

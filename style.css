@@ -51,3 +51,9 @@ body {
 	fill: hotpink;
 	opacity: 50%;
 }
+
+/* style of selected circles */
+.selected {
+  stroke: orange;
+  stroke-width: 3px;
+}
