@@ -203,21 +203,6 @@ const FRAME3 = d3.select("#vis3")
           .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
           .attr("class", (d) => { return d.Species; });
 
-    // function updateChart(event) {
-    //   selection = event.selection;
-    //   myBar.classed("selected", function(d){ return isBrushed(selection, BAR_X_SCALE(d.Species), BAR_Y_SCALE(50) ) } )
-    // }
-
-    // function isBrushed(brush_coords, cx, cy) {
-    //      let x0 = brush_coords[0][0],
-    //          x1 = brush_coords[1][0],
-    //          y0 = brush_coords[0][1],
-    //          y1 = brush_coords[1][1];
-    //     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
-    // }
-  // });
-// }
-
 // Function that is triggered when brushing is performed
     function updateChart(event) {
       // let myPoint1 = FRAME1.selectAll(".point");
