@@ -126,11 +126,14 @@ function build_interactive_plots() {
     if (selection === null) {
       myPoint.attr("stroke", null);
     } else {
-       myPoint.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top) } );
-       console.log('hello', myPoint._groups)
-       if (Object.values(myPoint._groups).includes('circle.setosa')) {
-        console.log('heyyy')
-  }
+      console.log(myPoint.classList)
+      let selected_flower_type = (d) => { return d.Species; };
+      var elts = document.getElementsByClassName(selected_flower_type);
+
+        for(var e = 0; e < elts.length; e++) { // For each element
+           var elt = elts[e];
+           elt.classList.add("selected");
+}
     }
   }
 
