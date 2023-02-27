@@ -122,20 +122,10 @@ function build_interactive_plots() {
     )
 
     // Function that is triggered when brushing is performed
-    function updateChart({selection}) {
-    if (selection === null) {
-      myPoint.attr("stroke", null);
-    } else {
-      console.log(myPoint.classList)
-      let selected_flower_type = (d) => { return d.Species; };
-      var elts = document.getElementsByClassName(selected_flower_type);
-
-        for(var e = 0; e < elts.length; e++) { // For each element
-           var elt = elts[e];
-           elt.classList.add("selected");
-}
+    function updateChart(event) {
+      selection = event.selection;
+      myPoint.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
     }
-  }
 
     // A function that return TRUE or FALSE according if a dot is in the selection or not
     function isBrushed(brush_coords, cx, cy) {

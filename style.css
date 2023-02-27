@@ -54,6 +54,8 @@ body {
 
 /* style of selected circles */
 .selected {
-  stroke: orange;
-  stroke-width: 3px;
+	opacity: 75%;
+	stroke: orange;
+	stroke-width: 3px;
+
 }
