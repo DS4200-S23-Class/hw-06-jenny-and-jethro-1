@@ -23,12 +23,27 @@ const SCATTER_VIS_HEIGHT = SCATTER_FRAME_HEIGHT - SCATTER_PLOT_MARGINS.top - SCA
 const SCATTER_VIS_WIDTH = SCATTER_FRAME_WIDTH - SCATTER_PLOT_MARGINS.left - SCATTER_PLOT_MARGINS.right; 
 
 
+
+
+const BAR_CHART_MARGINS = {top: 30, right: 30, bottom:30, left: 60};
+
+const BAR_FRAME_WIDTH = 460 - BAR_CHART_MARGINS.left - BAR_CHART_MARGINS.right;
+const BAR_FRAME_HEIGHT = 400 - BAR_CHART_MARGINS.top - BAR_CHART_MARGINS.bottom;
+
+const FRAME3 = d3.select("#vis3")
+                    .append("svg")
+                    .attr("width", BAR_FRAME_WIDTH + BAR_CHART_MARGINS.left + BAR_CHART_MARGINS.right)
+                    .attr("height", BAR_FRAME_HEIGHT + BAR_CHART_MARGINS.top + BAR_CHART_MARGINS.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
+
+
 // Build interactive scatter and bar plots
-function build_interactive_plots() { 
+// function build_interactive_plots() { -- just no
 
   // Scatter plot: Petal Length vs. Sepal Length
 
-  // Parse scatter plot data
+  // Parse scatter plot data -- just reading the same data
   d3.csv("data/iris.csv").then((data) => {
 
     // Find max X value
@@ -48,7 +63,7 @@ function build_interactive_plots() {
                       .range([SCATTER_VIS_HEIGHT, 0]);
 
     // Plot points on scatter plot
-    FRAME1.selectAll("points")  
+    let myPoint1 = FRAME1.append("g").selectAll("points")  
           .data(data)  
           .enter()       
           .append("circle")  
@@ -68,12 +83,25 @@ function build_interactive_plots() {
           .attr("transform", "translate(" + SCATTER_PLOT_MARGINS.left + "," + SCATTER_PLOT_MARGINS.bottom + ")")
           .call(d3.axisLeft(Y1_SCALE).ticks(14))
           .attr("font-size", "10px");
-  });
+
+    // function updateChart(event) {
+    //   selection = event.selection;
+    //   myPoint1.classed("selected", function(d){ return isBrushed(selection, X1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.left, Y1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.top ) } )
+    // }
+
+    // function isBrushed(brush_coords, cx, cy) {
+    //      let x0 = brush_coords[0][0],
+    //          x1 = brush_coords[1][0],
+    //          y0 = brush_coords[0][1],
+    //          y1 = brush_coords[1][1];
+    //     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+    // }
+  // });
 
   // Scatter plot - Petal Width vs. Sepal Width
 
   // Parse scatter plot data
-  d3.csv("data/iris.csv").then((data) => {
+  // d3.csv("data/iris.csv").then((data) => {
 
     // Find max X value
     const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
@@ -92,7 +120,7 @@ function build_interactive_plots() {
                       .range([SCATTER_VIS_HEIGHT, 0]);
 
     // Plot points on scatter plot
-    let myPoint= FRAME2.append("g")
+    let myPoint2 = FRAME2.append("g")
           .selectAll("points")
           .data(data)  
           .enter()       
@@ -121,42 +149,24 @@ function build_interactive_plots() {
       .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
     )
 
-    // Function that is triggered when brushing is performed
-    function updateChart(event) {
-      selection = event.selection;
-      myPoint.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
-    }
-
-    // A function that return TRUE or FALSE according if a dot is in the selection or not
-    function isBrushed(brush_coords, cx, cy) {
-         let x0 = brush_coords[0][0],
-             x1 = brush_coords[1][0],
-             y0 = brush_coords[0][1],
-             y1 = brush_coords[1][1];
-        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
-  }
-
-  }); 
+    
+  // }); 
 
   // Bar chart - Iris Species Count
 
   // Set bar graph margins
-  const BAR_CHART_MARGINS = {top: 30, right: 30, bottom:30, left: 60};
 
-  // Set frame dimensions
-  const BAR_FRAME_WIDTH = 460 - BAR_CHART_MARGINS.left - BAR_CHART_MARGINS.right;
-  const BAR_FRAME_HEIGHT = 400 - BAR_CHART_MARGINS.top - BAR_CHART_MARGINS.bottom;
 
   // Append the bar graph frame to the body of the page
-  const FRAME3 = d3.select("#vis3")
-                    .append("svg")
-                    .attr("width", BAR_FRAME_WIDTH + BAR_CHART_MARGINS.left + BAR_CHART_MARGINS.right)
-                    .attr("height", BAR_FRAME_HEIGHT + BAR_CHART_MARGINS.top + BAR_CHART_MARGINS.bottom)
-                    .append("g")
-                    .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
+  // const FRAME3 = d3.select("#vis3")
+  //                   .append("svg")
+  //                   .attr("width", BAR_FRAME_WIDTH + BAR_CHART_MARGINS.left + BAR_CHART_MARGINS.right)
+  //                   .attr("height", BAR_FRAME_HEIGHT + BAR_CHART_MARGINS.top + BAR_CHART_MARGINS.bottom)
+  //                   .append("g")
+  //                   .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
 
   // Parse bar graph data
-  d3.csv("data/iris.csv").then((data) => {
+  // d3.csv("data/iris.csv").then((data) => {
 
     // Scale X axis
     const BAR_X_SCALE = d3.scaleBand()
@@ -183,7 +193,7 @@ function build_interactive_plots() {
           .call(d3.axisLeft(BAR_Y_SCALE));
 
     // Create bars, which are scaled accordingly
-    FRAME3.selectAll("mybar")
+    let myBar = FRAME3.append("g").selectAll("mybar")
           .data(data)
           .enter()
           .append("rect")
@@ -192,9 +202,47 @@ function build_interactive_plots() {
           .attr("width", BAR_X_SCALE.bandwidth())
           .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
           .attr("class", (d) => { return d.Species; });
+
+    // function updateChart(event) {
+    //   selection = event.selection;
+    //   myBar.classed("selected", function(d){ return isBrushed(selection, BAR_X_SCALE(d.Species), BAR_Y_SCALE(50) ) } )
+    // }
+
+    // function isBrushed(brush_coords, cx, cy) {
+    //      let x0 = brush_coords[0][0],
+    //          x1 = brush_coords[1][0],
+    //          y0 = brush_coords[0][1],
+    //          y1 = brush_coords[1][1];
+    //     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+    // }
+  // });
+// }
+
+// Function that is triggered when brushing is performed
+    function updateChart(event) {
+      // let myPoint1 = FRAME1.selectAll(".point");
+      // let myPoint2 = FRAME2.selectAll(".point");
+      // let myBar = FRAME3.selectAll(".bar");
+      selection = event.selection;
+      myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
+      myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
+      myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
+      // myPoint1.classed("selected", function(d){ return isBrushed(selection, X1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.left, Y1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.top ) } )
+      // myBar.classed("selected", function(d){ return isBrushed(selection, BAR_X_SCALE(d.Species), BAR_Y_SCALE(50) ) } )
+    }
+
+    // A function that return TRUE or FALSE according if a dot is in the selection or not
+    //cx and cy are the points thmeselves, coords are the box coords
+    function isBrushed(brush_coords, cx, cy) {
+         let x0 = brush_coords[0][0],
+             x1 = brush_coords[1][0],
+             y0 = brush_coords[0][1],
+             y1 = brush_coords[1][1];
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+    }
   });
-}
+
 
 
 // Call function to display the plots
-build_interactive_plots();
+// build_interactive_plots();
