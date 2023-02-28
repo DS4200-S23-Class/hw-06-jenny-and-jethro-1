@@ -25,11 +25,9 @@ const MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
 const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right; 
 
-
-
 // Set up bar graph
 
-// Create frame for bar graph (Count of Species)
+// Create frame for bar graph (Counts of Species)
 const FRAME3 = d3.select("#vis3")
                     .append("svg")
                     .attr("width", VIS_WIDTH + MARGINS.left + MARGINS.right)
@@ -39,15 +37,15 @@ const FRAME3 = d3.select("#vis3")
 
 
 
-// Parse scatter plot data (only done once because it is the same data)
+// Parse iris data (only done once because the same data is used for each plot)
 d3.csv("data/iris.csv").then((data) => {
 
   // Scatter plot: Petal_Length vs. Sepal_Length
 
-  // Find max X value
+  // Find max sepal length (x) value
   const MAX_X1 = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
  
-  // Find max Y value
+  // Find max petal length (y) value
   const MAX_Y1 = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
 
   // Scale X
@@ -87,10 +85,10 @@ d3.csv("data/iris.csv").then((data) => {
 
   // Scatter plot: Petal_Width vs. Sepal_Width
 
-  // Find max X value
+  // Find max sepal width (x) value
   const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
    
-  // Find max Y value
+  // Find max petal width (y) value
   const MAX_Y2 = d3.max(data, (d) => { return parseInt(d.Petal_Width); });
 
   // Scale X
@@ -127,16 +125,15 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("font-size", "10px");
 
   // Add brushing
-  FRAME2.call( d3.brush()                 // Add the brush feature using the d3.brush function
-                 .extent( [ [0,0], [FRAME_WIDTH, FRAME_HEIGHT] ] ) // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-                 .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
-  );
+  FRAME2.call( d3.brush()                 // Use d3.brish to initalize a brush feature
+                 .extent( [ [0,0], [FRAME_WIDTH, FRAME_HEIGHT] ] ) // establish the brush area (maximum brush window = entire graph area)
+                 .on("start brush", updateChart) // 'updateChart' is triggered every time the brush window gets altered
 
   
 
   // Bar graph: Count of Species
 
-  // Set max Y value
+  // Set max Y (count) value
   const MAX_VAL = 50;
 
   // Scale X
@@ -176,7 +173,8 @@ d3.csv("data/iris.csv").then((data) => {
 
   // Brushing and Linking
 
-  // Function that is triggered when brushing is performed
+  // If the user brushes over points in the second scatter plot, corresponding points in the first scatter plot should be highlighted with increased opacity 
+  // and an orange border and corresponding bars should be highlighted with an orange border in the bar chart.
   function updateChart(event) {
     selection = event.selection;
     myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
@@ -184,14 +182,13 @@ d3.csv("data/iris.csv").then((data) => {
     myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
   };
 
-  // A function that return TRUE or FALSE according if a dot is in the selection or not
-  //cx and cy are the points thmeselves, coords are the box coords
+  // Returns TRUE if a point is in the selection window, returns FALSE if it is not
   function isBrushed(brush_coords, cx, cy) {
     let x0 = brush_coords[0][0],
         x1 = brush_coords[1][0],
         y0 = brush_coords[0][1],
         y1 = brush_coords[1][1];
-    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // indicates which points are in the selection window via booleans
   };
 
 });

@@ -54,9 +54,9 @@ body {
 	opacity: 50%;
 }
 
-/* Adjusts the style of selected circles */
+/* Adjusts the style of selected circles/bars */
 .selected {
-	opacity: 75%;
+	opacity: 100%;
 	stroke: orange;
 	stroke-width: 3px;
 
