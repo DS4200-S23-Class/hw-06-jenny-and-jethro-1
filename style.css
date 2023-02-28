@@ -12,12 +12,11 @@ body {
 .container {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 
 /* Adjusts the left column */
 .flex-left {
-	width: 33.33%;
 	flex-wrap: flex;
 	flex-direction: column;
 }
@@ -25,14 +24,12 @@ body {
 /* Adjusts the middle column */
 .flex-middle {
 	flex-direction: column;
-	width: 33.33%;
 	flex-wrap: wrap;
 }
 
 /* Adjusts the right column */
 .flex-right {
 	flex-direction: column;
-	width: 33.33%;
 	flex-wrap: wrap;
 }
 
