@@ -30,11 +30,11 @@ const SCATTER_VIS_WIDTH = SCATTER_FRAME_WIDTH - SCATTER_PLOT_MARGINS.left - SCAT
 // Set up bar graph
 
 // Set margins for bar graph
-const BAR_CHART_MARGINS = {top: 30, right: 30, bottom:30, left: 60};
+const BAR_CHART_MARGINS = {top: 50, right: 50, bottom:50, left: 50};
 
 // Set frame dimensions for bar graph
-const BAR_FRAME_WIDTH = 460 - BAR_CHART_MARGINS.left - BAR_CHART_MARGINS.right;
-const BAR_FRAME_HEIGHT = 400 - BAR_CHART_MARGINS.top - BAR_CHART_MARGINS.bottom;
+const BAR_FRAME_WIDTH = 500 - BAR_CHART_MARGINS.left - BAR_CHART_MARGINS.right;
+const BAR_FRAME_HEIGHT = 500 - BAR_CHART_MARGINS.top - BAR_CHART_MARGINS.bottom;
 
 // Create frame for bar graph (Count of Species)
 const FRAME3 = d3.select("#vis3")
