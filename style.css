@@ -58,6 +58,6 @@ body {
 .selected {
 	opacity: 75%;
 	stroke: orange;
-	stroke-width: 3px;
+	stroke-width: 5px;
 
 }
