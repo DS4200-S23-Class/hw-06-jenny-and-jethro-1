@@ -43,19 +43,19 @@ d3.csv("data/iris.csv").then((data) => {
   // Scatter plot: Petal_Length vs. Sepal_Length
 
   // Find max sepal length (x) value
-  const MAX_X1 = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
+  const MAX_SEP_LEN = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
  
   // Find max petal length (y) value
-  const MAX_Y1 = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
+  const MAX_PET_LEN = d3.max(data, (d) => { return parseInt(d.Petal_Length); });
 
   // Scale X
-  const X1_SCALE = d3.scaleLinear() 
-                     .domain([0, (MAX_X1 + 1)]) // add some padding  
+  const SEP_LEN_SCALE = d3.scaleLinear() 
+                     .domain([0, (MAX_SEP_LEN + 1)]) // add some padding  
                      .range([0, VIS_WIDTH]); 
 
   // Scale Y
-  const Y1_SCALE = d3.scaleLinear()
-                     .domain([0, (MAX_Y1 + 1)])
+  const PET_LEN_SCALE = d3.scaleLinear()
+                     .domain([0, (MAX_PET_LEN + 1)])
                      .range([VIS_HEIGHT, 0]);
 
   // Plot points on scatter plot
@@ -64,21 +64,21 @@ d3.csv("data/iris.csv").then((data) => {
                        .data(data)  
                        .enter()       
                        .append("circle")  
-                       .attr("cx", (d) => { return (X1_SCALE(d.Sepal_Length) + MARGINS.left); }) 
-                       .attr("cy", (d) => { return (Y1_SCALE(d.Petal_Length) + MARGINS.top); }) 
+                       .attr("cx", (d) => { return (SEP_LEN_SCALE(d.Sepal_Length) + MARGINS.left); }) 
+                       .attr("cy", (d) => { return (PET_LEN_SCALE(d.Petal_Length) + MARGINS.top); }) 
                        .attr("r", 5)
                        .attr("class", (d) => { return d.Species; });
 
   // Add X axis  
   FRAME1.append("g") 
         .attr("transform", "translate(" + MARGINS.left + "," + (VIS_HEIGHT + MARGINS.top) + ")") 
-        .call(d3.axisBottom(X1_SCALE).ticks(9)) 
+        .call(d3.axisBottom(SEP_LEN_SCALE).ticks(9)) 
         .attr("font-size", "10px");
 
   // Add Y axis
   FRAME1.append("g")       
         .attr("transform", "translate(" + MARGINS.left + "," + MARGINS.bottom + ")")
-        .call(d3.axisLeft(Y1_SCALE).ticks(14))
+        .call(d3.axisLeft(PET_LEN_SCALE).ticks(14))
         .attr("font-size", "10px");
 
 
@@ -86,19 +86,19 @@ d3.csv("data/iris.csv").then((data) => {
   // Scatter plot: Petal_Width vs. Sepal_Width
 
   // Find max sepal width (x) value
-  const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
+  const MAX_SEP_WIDTH = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
    
   // Find max petal width (y) value
-  const MAX_Y2 = d3.max(data, (d) => { return parseInt(d.Petal_Width); });
+  const MAX_PET_WIDTH = d3.max(data, (d) => { return parseInt(d.Petal_Width); });
 
   // Scale X
-  const X2_SCALE = d3.scaleLinear() 
-                     .domain([0, (MAX_X2 + 1)]) // add some padding  
+  const SEP_WIDTH_SCALE = d3.scaleLinear() 
+                     .domain([0, (MAX_SEP_WIDTH + 1)]) // add some padding  
                      .range([0, VIS_WIDTH]); 
 
   // Scale Y
-  const Y2_SCALE = d3.scaleLinear()
-                     .domain([0, (MAX_Y2 + 1)])
+  const PET_WIDTH_SCALE = d3.scaleLinear()
+                     .domain([0, (MAX_PET_WIDTH + 1)])
                      .range([VIS_HEIGHT, 0]);
 
   // Plot points on scatter plot
@@ -107,55 +107,55 @@ d3.csv("data/iris.csv").then((data) => {
                        .data(data)  
                        .enter()       
                        .append("circle")  
-                       .attr("cx", (d) => { return (X2_SCALE(d.Sepal_Width) + MARGINS.left); }) 
-                       .attr("cy", (d) => { return (Y2_SCALE(d.Petal_Width) + MARGINS.top); }) 
+                       .attr("cx", (d) => { return (SEP_WIDTH_SCALE(d.Sepal_Width) + MARGINS.left); }) 
+                       .attr("cy", (d) => { return (PET_WIDTH_SCALE(d.Petal_Width) + MARGINS.top); }) 
                        .attr("r", 5)
                        .attr("class", (d) => { return d.Species; });
 
   // Add X axis  
   FRAME2.append("g") 
         .attr("transform", "translate(" + MARGINS.left + "," + (VIS_HEIGHT + MARGINS.top) + ")") 
-        .call(d3.axisBottom(X2_SCALE).ticks(9)) 
+        .call(d3.axisBottom(SEP_WIDTH_SCALE).ticks(9)) 
         .attr("font-size", "10px");
 
   // Add Y axis
   FRAME2.append("g")       
         .attr("transform", "translate(" + MARGINS.left + "," + MARGINS.bottom + ")")
-        .call(d3.axisLeft(Y2_SCALE).ticks(14))
+        .call(d3.axisLeft(PET_WIDTH_SCALE).ticks(14))
         .attr("font-size", "10px");
 
   // Add brushing
   FRAME2.call( d3.brush()                 // Use d3.brish to initalize a brush feature
                  .extent( [ [0,0], [FRAME_WIDTH, FRAME_HEIGHT] ] ) // establish the brush area (maximum brush window = entire graph area)
-                 .on("start brush", updateChart) // 'updateChart' is triggered every time the brush window gets altered
+                 .on("start brush", updateChart)); // 'updateChart' is triggered every time the brush window gets altered
 
   
 
   // Bar graph: Count of Species
 
   // Set max Y (count) value
-  const MAX_VAL = 50;
+  const MAX_COUNT = 50;
 
   // Scale X
-  const BAR_X_SCALE = d3.scaleBand()
+  const BAR_SPECIES_SCALE = d3.scaleBand()
                         .range([ 0, VIS_WIDTH ])
                         .domain(data.map(function(d) { return d.Species; }))
                         .padding(0.2);
 
   // Scale Y
-  const BAR_Y_SCALE = d3.scaleLinear()
-                        .domain([0, MAX_VAL])
+  const BAR_COUNT_SCALE = d3.scaleLinear()
+                        .domain([0, MAX_COUNT])
                         .range([ VIS_HEIGHT, 0]);
 
   // Add X axis
   FRAME3.append("g")
         .attr("transform", "translate(0," + VIS_HEIGHT + ")")
-        .call(d3.axisBottom(BAR_X_SCALE))
+        .call(d3.axisBottom(BAR_SPECIES_SCALE))
         .selectAll("text");
 
   // Add Y axis
   FRAME3.append("g")
-        .call(d3.axisLeft(BAR_Y_SCALE));
+        .call(d3.axisLeft(BAR_COUNT_SCALE));
 
   // Add bars, which are scaled accordingly
   let myBar = FRAME3.append("g")
@@ -163,10 +163,10 @@ d3.csv("data/iris.csv").then((data) => {
                     .data(data)
                     .enter()
                     .append("rect")
-                    .attr("x", function(d) { return BAR_X_SCALE(d.Species); })
-                    .attr("y", BAR_Y_SCALE(50))
-                    .attr("width", BAR_X_SCALE.bandwidth())
-                    .attr("height", function(d) { return VIS_HEIGHT - BAR_Y_SCALE(50); })
+                    .attr("x", function(d) { return BAR_SPECIES_SCALE(d.Species); })
+                    .attr("y", BAR_COUNT_SCALE(50))
+                    .attr("width", BAR_SPECIES_SCALE.bandwidth())
+                    .attr("height", function(d) { return VIS_HEIGHT - BAR_COUNT_SCALE(50); })
                     .attr("class", (d) => { return d.Species; });
 
 
@@ -177,9 +177,9 @@ d3.csv("data/iris.csv").then((data) => {
   // and an orange border and corresponding bars should be highlighted with an orange border in the bar chart.
   function updateChart(event) {
     selection = event.selection;
-    myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
-    myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
-    myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
+    myPoint1.classed("selected", function(d){ return isBrushed(selection, SEP_WIDTH_SCALE(d.Sepal_Width) + MARGINS.left, PET_WIDTH_SCALE(d.Petal_Width) + MARGINS.top ); } )
+    myPoint2.classed("selected", function(d){ return isBrushed(selection, SEP_WIDTH_SCALE(d.Sepal_Width) + MARGINS.left, PET_WIDTH_SCALE(d.Petal_Width) + MARGINS.top ); } )
+    myBar.classed("selected", function(d){ return isBrushed(selection, SEP_WIDTH_SCALE(d.Sepal_Width) + MARGINS.left, PET_WIDTH_SCALE(d.Petal_Width) + MARGINS.top ); } )
   };
 
   // Returns TRUE if a point is in the selection window, returns FALSE if it is not
