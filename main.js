@@ -130,7 +130,7 @@ d3.csv("data/iris.csv").then((data) => {
   FRAME2.call( d3.brush()                 // Add the brush feature using the d3.brush function
                  .extent( [ [0,0], [FRAME_WIDTH, FRAME_HEIGHT] ] ) // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
                  .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
-  )
+  );
 
   
 
@@ -147,7 +147,7 @@ d3.csv("data/iris.csv").then((data) => {
 
   // Scale Y
   const BAR_Y_SCALE = d3.scaleLinear()
-                        .domain([0, MAX_VAL])
+                        .domain([0, MAX_VAL + 1])
                         .range([ VIS_HEIGHT, 0]);
 
   // Add X axis
@@ -179,9 +179,9 @@ d3.csv("data/iris.csv").then((data) => {
   // Function that is triggered when brushing is performed
   function updateChart(event) {
     selection = event.selection;
-    myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
-    myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
-    myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
+    myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
+    myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
+    myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
   }
 
   // A function that return TRUE or FALSE according if a dot is in the selection or not
