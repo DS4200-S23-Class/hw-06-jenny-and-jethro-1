@@ -1,4 +1,4 @@
-/* Setting font style to Arial */
+/* Styles the body (setting font style) */
 body {
 	font-family: Arial;	
 }
@@ -42,17 +42,19 @@ body {
 	opacity: 50%;
 }
 
+/* Adjusts the style of the points representing versicolor irises */
 .versicolor {
 	fill: chocolate;
 	opacity: 50%;
 }
 
+/* Adjusts the style of the points representing virginica irises */
 .virginica {
 	fill: hotpink;
 	opacity: 50%;
 }
 
-/* style of selected circles */
+/* Adjusts the style of selected circles */
 .selected {
 	opacity: 75%;
 	stroke: orange;

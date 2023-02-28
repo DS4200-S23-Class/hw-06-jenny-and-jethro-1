@@ -1,35 +1,42 @@
-// Set frame dimensions
+// Set up scatter plots
+
+// Set frame dimensions for scatter plots
 const SCATTER_FRAME_HEIGHT = 500;
 const SCATTER_FRAME_WIDTH = 500; 
 
-// Create three frames for each visualization
+// Create frame for scatter plot (Petal_Length vs. Sepal_Length)
 const FRAME1 = d3.select("#vis1")
                  .append("svg")
                  .attr("height", SCATTER_FRAME_HEIGHT)
                  .attr("width", SCATTER_FRAME_WIDTH)
                  .attr("class", "frame"); 
 
+// Create frame for scatter plot (Petal_Width vs. Sepal Width)
 const FRAME2 = d3.select("#vis2")
                  .append("svg")
                  .attr("height", SCATTER_FRAME_HEIGHT)
                  .attr("width", SCATTER_FRAME_WIDTH)
                  .attr("class", "frame"); 
 
-// Set scatter plot margins
+// Set margins for scatter plots
 const SCATTER_PLOT_MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
-// Set vis dimensions
+// Set vis dimensions for scatter plots
 const SCATTER_VIS_HEIGHT = SCATTER_FRAME_HEIGHT - SCATTER_PLOT_MARGINS.top - SCATTER_PLOT_MARGINS.bottom;
 const SCATTER_VIS_WIDTH = SCATTER_FRAME_WIDTH - SCATTER_PLOT_MARGINS.left - SCATTER_PLOT_MARGINS.right; 
 
 
 
+// Set up bar graph
 
+// Set margins for bar graph
 const BAR_CHART_MARGINS = {top: 30, right: 30, bottom:30, left: 60};
 
+// Set frame dimensions for bar graph
 const BAR_FRAME_WIDTH = 460 - BAR_CHART_MARGINS.left - BAR_CHART_MARGINS.right;
 const BAR_FRAME_HEIGHT = 400 - BAR_CHART_MARGINS.top - BAR_CHART_MARGINS.bottom;
 
+// Create frame for bar graph (Count of Species)
 const FRAME3 = d3.select("#vis3")
                     .append("svg")
                     .attr("width", BAR_FRAME_WIDTH + BAR_CHART_MARGINS.left + BAR_CHART_MARGINS.right)
@@ -38,12 +45,11 @@ const FRAME3 = d3.select("#vis3")
                     .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
 
 
-// Build interactive scatter and bar plots
 
-// Scatter plot: Petal Length vs. Sepal Length
-
-// Parse scatter plot data -- just reading the same data
+// Parse scatter plot data (only done once because it is the same data)
 d3.csv("data/iris.csv").then((data) => {
+
+  // Scatter plot: Petal_Length vs. Sepal_Length
 
   // Find max X value
   const MAX_X1 = d3.max(data, (d) => { return parseInt(d.Sepal_Length); });
@@ -84,7 +90,9 @@ d3.csv("data/iris.csv").then((data) => {
         .call(d3.axisLeft(Y1_SCALE).ticks(14))
         .attr("font-size", "10px");
 
-  // Scatter plot - Petal Width vs. Sepal Width
+
+
+  // Scatter plot: Petal_Width vs. Sepal_Width
 
   // Find max X value
   const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
@@ -131,11 +139,23 @@ d3.csv("data/iris.csv").then((data) => {
                  .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
   )
 
-  // Scale X axis
+  
+
+  // Bar graph: Count of Species
+
+  // Set max Y value
+  const MAX_VAL = 50;
+
+  // Scale X
   const BAR_X_SCALE = d3.scaleBand()
                         .range([ 0, BAR_FRAME_WIDTH ])
                         .domain(data.map(function(d) { return d.Species; }))
                         .padding(0.2);
+
+  // Scale Y
+  const BAR_Y_SCALE = d3.scaleLinear()
+                        .domain([0, MAX_VAL])
+                        .range([ BAR_FRAME_HEIGHT, 0]);
 
   // Add X axis
   FRAME3.append("g")
@@ -143,19 +163,11 @@ d3.csv("data/iris.csv").then((data) => {
         .call(d3.axisBottom(BAR_X_SCALE))
         .selectAll("text");
 
-  // Sets the max Y value
-  const MAX_VAL = 50;
-
-  // Scale Y axis
-  const BAR_Y_SCALE = d3.scaleLinear()
-                        .domain([0, MAX_VAL])
-                        .range([ BAR_FRAME_HEIGHT, 0]);
-
   // Add Y axis
   FRAME3.append("g")
         .call(d3.axisLeft(BAR_Y_SCALE));
 
-  // Create bars, which are scaled accordingly
+  // Add bars, which are scaled accordingly
   let myBar = FRAME3.append("g")
                     .selectAll("mybar")
                     .data(data)
@@ -167,7 +179,11 @@ d3.csv("data/iris.csv").then((data) => {
                     .attr("height", function(d) { return BAR_FRAME_HEIGHT - BAR_Y_SCALE(50); })
                     .attr("class", (d) => { return d.Species; });
 
-// Function that is triggered when brushing is performed
+
+
+  // Brushing and Linking
+
+  // Function that is triggered when brushing is performed
   function updateChart(event) {
     selection = event.selection;
     myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
@@ -184,5 +200,5 @@ d3.csv("data/iris.csv").then((data) => {
         y1 = brush_coords[1][1];
     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
   }
-  
+
 });
