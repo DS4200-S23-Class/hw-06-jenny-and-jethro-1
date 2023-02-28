@@ -147,7 +147,7 @@ d3.csv("data/iris.csv").then((data) => {
 
   // Scale Y
   const BAR_Y_SCALE = d3.scaleLinear()
-                        .domain([0, MAX_VAL + 1])
+                        .domain([0, MAX_VAL])
                         .range([ VIS_HEIGHT, 0]);
 
   // Add X axis
@@ -179,10 +179,10 @@ d3.csv("data/iris.csv").then((data) => {
   // Function that is triggered when brushing is performed
   function updateChart(event) {
     selection = event.selection;
-    myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
-    myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
-    myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ); } )
-  }
+    myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
+    myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
+    myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + MARGINS.left, Y2_SCALE(d.Petal_Width) + MARGINS.top ) } )
+  };
 
   // A function that return TRUE or FALSE according if a dot is in the selection or not
   //cx and cy are the points thmeselves, coords are the box coords
@@ -192,6 +192,6 @@ d3.csv("data/iris.csv").then((data) => {
         y0 = brush_coords[0][1],
         y1 = brush_coords[1][1];
     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
-  }
+  };
 
 });
