@@ -38,8 +38,7 @@ const FRAME3 = d3.select("#vis3")
                     .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
 
 
-// Build interactive scatter and bar plots
-// function build_interactive_plots() { -- just no
+  // Build interactive scatter and bar plots
 
   // Scatter plot: Petal Length vs. Sepal Length
 
@@ -84,24 +83,7 @@ const FRAME3 = d3.select("#vis3")
           .call(d3.axisLeft(Y1_SCALE).ticks(14))
           .attr("font-size", "10px");
 
-    // function updateChart(event) {
-    //   selection = event.selection;
-    //   myPoint1.classed("selected", function(d){ return isBrushed(selection, X1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.left, Y1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.top ) } )
-    // }
-
-    // function isBrushed(brush_coords, cx, cy) {
-    //      let x0 = brush_coords[0][0],
-    //          x1 = brush_coords[1][0],
-    //          y0 = brush_coords[0][1],
-    //          y1 = brush_coords[1][1];
-    //     return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
-    // }
-  // });
-
   // Scatter plot - Petal Width vs. Sepal Width
-
-  // Parse scatter plot data
-  // d3.csv("data/iris.csv").then((data) => {
 
     // Find max X value
     const MAX_X2 = d3.max(data, (d) => { return parseInt(d.Sepal_Width); });
@@ -149,25 +131,6 @@ const FRAME3 = d3.select("#vis3")
       .on("start brush", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
     )
 
-    
-  // }); 
-
-  // Bar chart - Iris Species Count
-
-  // Set bar graph margins
-
-
-  // Append the bar graph frame to the body of the page
-  // const FRAME3 = d3.select("#vis3")
-  //                   .append("svg")
-  //                   .attr("width", BAR_FRAME_WIDTH + BAR_CHART_MARGINS.left + BAR_CHART_MARGINS.right)
-  //                   .attr("height", BAR_FRAME_HEIGHT + BAR_CHART_MARGINS.top + BAR_CHART_MARGINS.bottom)
-  //                   .append("g")
-  //                   .attr("transform", "translate(" + BAR_CHART_MARGINS.left + "," + BAR_CHART_MARGINS.top + ")");
-
-  // Parse bar graph data
-  // d3.csv("data/iris.csv").then((data) => {
-
     // Scale X axis
     const BAR_X_SCALE = d3.scaleBand()
                           .range([ 0, BAR_FRAME_WIDTH ])
@@ -212,8 +175,6 @@ const FRAME3 = d3.select("#vis3")
       myPoint2.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
       myPoint1.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
       myBar.classed("selected", function(d){ return isBrushed(selection, X2_SCALE(d.Sepal_Width) + SCATTER_PLOT_MARGINS.left, Y2_SCALE(d.Petal_Width) + SCATTER_PLOT_MARGINS.top ) } )
-      // myPoint1.classed("selected", function(d){ return isBrushed(selection, X1_SCALE(d.Sepal_Length) + SCATTER_PLOT_MARGINS.left, Y1_SCALE(d.Petal_Length) + SCATTER_PLOT_MARGINS.top ) } )
-      // myBar.classed("selected", function(d){ return isBrushed(selection, BAR_X_SCALE(d.Species), BAR_Y_SCALE(50) ) } )
     }
 
     // A function that return TRUE or FALSE according if a dot is in the selection or not
