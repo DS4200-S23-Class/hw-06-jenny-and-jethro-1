@@ -125,13 +125,13 @@ d3.csv("data/iris.csv").then((data) => {
         .attr("font-size", "10px");
 
   // Add brushing
-  FRAME2.call( d3.brush()                 // Use d3.brish to initalize a brush feature
+  FRAME2.call( d3.brush()                 // Use d3.brush to initalize a brush feature
                  .extent( [ [0,0], [FRAME_WIDTH, FRAME_HEIGHT] ] ) // establish the brush area (maximum brush window = entire graph area)
                  .on("start brush", updateChart)); // 'updateChart' is triggered every time the brush window gets altered
 
   
 
-  // Bar graph: Count of Species
+  // Bar graph: Counts of Species
 
   // Set max Y (count) value
   const MAX_COUNT = 50;
@@ -173,8 +173,8 @@ d3.csv("data/iris.csv").then((data) => {
 
   // Brushing and Linking
 
-  // If the user brushes over points in the second scatter plot, corresponding points in the first scatter plot should be highlighted with increased opacity 
-  // and an orange border and corresponding bars should be highlighted with an orange border in the bar chart.
+  // When points are brushed over in the center scatter plot, the aligned points in the leftmost plot get highlighted with a raised opacity and attain an orange border. 
+  // Furthermore, any aligned bars in the rightmost plot get highlighted and also attain an orange border.
   function updateChart(event) {
     selection = event.selection;
     myPoint1.classed("selected", function(d){ return isBrushed(selection, SEP_WIDTH_SCALE(d.Sepal_Width) + MARGINS.left, PET_WIDTH_SCALE(d.Petal_Width) + MARGINS.top ); } )
