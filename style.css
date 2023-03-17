@@ -3,6 +3,12 @@ body {
 	font-family: Arial;	
 }
 
+.axis path, .axis line {
+    fill: none;
+    shape-rendering: crispedges;
+    stroke: #000000;
+}
+
 /* Centers all elements with the class "centered" */
 .centered {
 	text-align: center;
